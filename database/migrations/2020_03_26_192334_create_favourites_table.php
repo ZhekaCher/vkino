@@ -19,7 +19,7 @@ class CreateFavouritesTable extends Migration
             $table->timestamp('relevance')->default(DB::raw('CURRENT_TIMESTAMP'));
 
             $table->foreign('film_id')->references('film_id')->on('films');
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
