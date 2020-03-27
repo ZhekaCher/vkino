@@ -12,15 +12,17 @@ class FilmsController extends Controller
     {
         $genre = $request['genre'];
         $films = array();
-        if ($genre != null)
+        if ($genre != null) {
             $films = DB::table('films')
                 ->join('films_genres', 'films.id', '=', 'films_genres.film_id')
                 ->join('genres', 'films_genres.genre_id', '=', 'genres.id')
                 ->select('films.*')
-                ->where('genres.value','=',$genre)->get();
+                ->where('genres.value', '=', $genre)->paginate(5);
+            $films->withPath('/films?genre='.$genre);
+        }
 
         else
-            $films = Film::all();
+            $films = Film::paginate(5);
         return view('films.index', compact('films'));
     }
 
