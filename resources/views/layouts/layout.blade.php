@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="/css/style.css" rel="stylesheet">
     <link href="/libs/foundation-6.6.1/css/app.css" rel="stylesheet">
+    <link href="/libs/fontawesome-pro-5.12.0-web/css/all.css" rel="stylesheet">
     @yield('header')
     <title>@yield('title')</title>
 </head>

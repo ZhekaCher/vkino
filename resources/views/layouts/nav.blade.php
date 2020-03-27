@@ -8,7 +8,7 @@
         <ul class="dropdown menu" data-dropdown-menu>
             <li><img id="logo" src="/img/vkino-black.png" alt="Logo"></li>
             <li class="has-submenu">
-                <a href="#0">Films</a>
+                <a href="/films">Films</a>
                 <ul class="submenu menu vertical" data-submenu>
                     @php
                         $genres = App\Genre::all();
