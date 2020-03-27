@@ -28,6 +28,26 @@
             <li>
                 <button type="button" class="button">Search</button>
             </li>
+            @guest
+                <li>
+                    <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                @if (Route::has('register'))
+                    <li class="nav-item">
+                        <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                @endif
+            @endguest
+            @auth
+                {{--                TODO(Add menu for user with logout)--}}
+                <li>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="button">Logout</button>
+                    </form>
+                </li>
+            @endauth
+
         </ul>
     </div>
 </div>
