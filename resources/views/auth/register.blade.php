@@ -1,77 +1,54 @@
-@extends('layouts.app')
+@extends('layouts.auth')
+
+@section('title','Register')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+    @error('name')
+    <script type="text/javascript">
+        let messageText = {!! json_encode($message) !!};
+        Toast.add({
+            text: messageText,
+            color: '#ffffff',
+            autohide: true,
+            delay: 6500
+        });
+    </script>
+    @enderror
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+    @error('email')
+    <script type="text/javascript">
+        let messageText = {!! json_encode($message) !!};
+        Toast.add({
+            text: messageText,
+            color: '#ffffff',
+            autohide: true,
+            delay: 6500
+        });
+    </script>
+    @enderror
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+    @error('password')
+    <script type="text/javascript">
+        let messageText = {!! json_encode($message) !!};
+        Toast.add({
+            text: messageText,
+            color: '#ffffff',
+            autohide: true,
+            delay: 6500
+        });
+    </script>
+    @enderror
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <form id="signin" method="POST" action="{{ route('register') }}" autocomplete="off">
+        @csrf
+        <input type="text" style="@error('name') border: red solid 1px; @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Name" required autocomplete="name" autofocus/>
+        <input type="email" style="@error('email') border: red solid 1px; @enderror" id="email" name="email" placeholder="E-Mail" value="{{ old('email') }}" required autocomplete="email"/>
+        <input type="password" style="@error('password') border: red solid 1px; @enderror" id="password" name="password" placeholder="Password" required autocomplete="new-password"/>
+        <input type="password" style="@error('password') border: red solid 1px; @enderror" id="password-confirm" name="password_confirmation" placeholder="Password cofirmation" required autocomplete="new-password"/>
+        <button type="submit">&#xf0da;</button>
+        <p>Already with us? <a href="{{ url('/login') }}">login</a></p>
+    </form>
 @endsection

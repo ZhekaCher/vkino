@@ -31,26 +31,26 @@
     <form id="signin" method="POST" action="{{ route('login') }}">
         @csrf
 
-        <input type="email" id="user" name="email"
-               placeholder="email" value="{{ old('email') }}" required autocomplete="email" autofocus/>
+        <input type="email" style="@error('email') border: red solid 1px; @enderror" id="user" name="email"
+               placeholder="E-Mail" value="{{ old('email') }}" required autocomplete="email" autofocus/>
 
 
-        <input type="password" id="password" name="password"
-               placeholder="password" required autocomplete="current-password"/>
+        <input type="password" style="@error('email') border: red solid 1px; @enderror" id="password" name="password"
+               placeholder="Password" required autocomplete="current-password"/>
         <p>
-        <input type="checkbox" name="remember"
-               id="remember" {{ old('remember') ? 'checked' : '' }}>
+            <input type="checkbox" name="remember"
+                   id="remember" {{ old('remember') ? 'checked' : '' }}>
             <label for="remember">
                 {{ __('Remember Me') }}
             </label>
         </p>
         <button type="submit">&#xf0da;</button>
-{{--        @if (Route::has('password.request'))--}}
-{{--            <br>--}}
-{{--            <a style="color: white" href="{{ route('password.request') }}">--}}
-{{--                {{ __('Forgot Your Password?') }}--}}
-{{--            </a>--}}
-{{--        @endif--}}
+        {{--        @if (Route::has('password.request'))--}}
+        {{--            <br>--}}
+        {{--            <a style="color: white" href="{{ route('password.request') }}">--}}
+        {{--                {{ __('Forgot Your Password?') }}--}}
+        {{--            </a>--}}
+        {{--        @endif--}}
         <p>Not yet with us? <a href="{{url('/register')}}">registration</a></p>
     </form>
 @endsection
