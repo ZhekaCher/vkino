@@ -10,8 +10,11 @@
             <li class="has-submenu">
                 <a href="#0">Films</a>
                 <ul class="submenu menu vertical" data-submenu>
+                    @php
+                        $genres = App\Genre::all();
+                    @endphp
                     @foreach($genres as $genre)
-                        <li><a href="/films?genre={{$genre}}">{{$genre}}</a></li>
+                        <li><a href="/films?genre={{$genre->value}}">{{$genre->value}}</a></li>
                     @endforeach
                 </ul>
             </li>

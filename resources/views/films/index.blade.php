@@ -5,8 +5,8 @@
 @section('content')
 
 
-    @foreach($films as $film)
-        <h1>{{$film}}</h1>
+    @foreach($films  as $film)
+        <h1>{{$film -> title}}</h1>
     @endforeach
 
     This is films list page

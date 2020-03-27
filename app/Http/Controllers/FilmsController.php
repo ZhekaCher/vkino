@@ -8,13 +8,35 @@ use Illuminate\Support\Facades\DB;
 
 class FilmsController extends Controller
 {
-    public function index(){
-        $films = Film::all();
+    public function index(Request $request)
+    {
+        $genre = $request['genre'];
+        $films = array();
+        if ($genre != null)
+            $films = DB::table('films')
+                ->join('films_genres', 'films.id', '=', 'films_genres.film_id')
+                ->join('genres', 'films_genres.genre_id', '=', 'genres.id')
+                ->select('films.*')
+                ->where('genres.value','=',$genre)->get();
+
+        else
+            $films = Film::all();
         return view('films.index', compact('films'));
     }
 
+    public
+    function indexByGenre($genre)
+    {
+        $films = Film::all();
+        return $genre;
 
-    public function show(Request $request, $filmId){
+//        return view('films.index', compact('films'));
+    }
+
+
+    public
+    function show(Request $request, $filmId)
+    {
         $film = DB::table('films')->find($filmId);
         if ($film == null)
             return view('error')->with('errorMessage', 'This film doesn\'t exists');
