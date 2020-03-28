@@ -3,7 +3,7 @@
     <div class="title-bar-title">Menu</div>
 </div>
 
-<div class="top-bar" id="responsive-menu">
+<div class="top-bar" id="responsive-menu" style="margin-bottom: 5vh">
     <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
             <li><img id="logo" src="/img/vkino-black.png" alt="Logo"></li>

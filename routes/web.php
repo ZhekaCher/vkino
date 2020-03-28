@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function (){return redirect('/');});
 Route::get('/films', 'FilmsController@index');
 Route::get('/films/{filmId}', 'FilmsController@show');

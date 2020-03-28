@@ -18,10 +18,10 @@ class FilmsController extends Controller
                 ->join('genres', 'films_genres.genre_id', '=', 'genres.id')
                 ->select('films.*')
                 ->where('genres.value', '=', $genre)->paginate(5);
-            $films->withPath('/films?genre='.$genre);
-        }
-
-        else
+            $films->withPath('/films?genre=' . $genre);
+            if ($films->isEmpty())
+                return view('error')->with('errorMessage', 'This genre doesn\'t exists or page doesn\'t contains any films');
+        } else
             $films = Film::paginate(5);
         return view('films.index', compact('films'));
     }
@@ -40,6 +40,14 @@ class FilmsController extends Controller
     function show(Request $request, $filmId)
     {
         $film = DB::table('films')->find($filmId);
+        $film->genres = DB::table('films_genres')
+            ->join('genres', 'films_genres.genre_id', '=', 'id')
+            ->where('films_genres.film_id', '=', $filmId)
+            ->select('value')->get();
+        $film->comments = DB::table('comments')
+            ->join('users', 'comments.user_id', '=', 'users.id')
+            ->where('comments.film_id', '=', $filmId)
+            ->select('text', 'rating','relevance','name')->get();
         if ($film == null)
             return view('error')->with('errorMessage', 'This film doesn\'t exists');
 //        $film = DB::table('films')->where('film_id'==$filmId);
