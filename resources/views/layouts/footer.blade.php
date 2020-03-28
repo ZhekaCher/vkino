@@ -10,6 +10,7 @@
             <i class="fab fa-telegram contact-link"></i>
             <i class="fab fa-twitter contact-link"></i>
             <i class="fab fa-vk contact-link"></i>
+            <a href="https://github.com/ZhekaCher/vkino"><i class="fab fa-github contact-link"></i></a>
         </div>
     </div>
 </footer>
