@@ -2,3 +2,5 @@
 *.CSSlinguist-detectable=false
 *.scss linguist-detectable=false
 *.SCSS linguist-detectable=false
+*.js linguist-detectable=false
+*.JS linguist-detectable=false
