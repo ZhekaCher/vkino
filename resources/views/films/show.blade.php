@@ -47,10 +47,9 @@
                             </h3>
                         @endif
                     </div>
-                    <div class="small-9 columns">
-                        <input type="text" id="middle-label" placeholder="One fish two fish">
-                    </div>
                 </div>
+                <h3>Duration: {{date('H', mktime(0,$film->duration))}} hours {{date('i', mktime(0,$film->duration))}} minutes</h3>
+                <h3>Release Date: {{$film->release}}</h3>
             </div>
         </div>
 
@@ -107,7 +106,7 @@
                             <div class="cell small-12 medium-4 large-2" style="margin: 30px">
                                 <div class="column text-center">
                                     <img class="thumbnail" src="\img\film_posters\{{$relatedFilm -> id}}.jpg"
-                                         style="height: 40vh;">
+                                         style="width: auto; height: 40vh;">
                                     <h5>{{$relatedFilm->title}} </h5>
                                     <p>{{$relatedFilm->description}}</p>
                                     <small>

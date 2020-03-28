@@ -10,3 +10,8 @@
     color: deepskyblue;
     cursor: pointer;
 }
+
+.logo{
+    border-collapse: collapse !important;
+    padding: 0 !important;
+}
