@@ -48,7 +48,8 @@
                         @endif
                     </div>
                 </div>
-                <h3>Duration: {{date('H', mktime(0,$film->duration))}} hours {{date('i', mktime(0,$film->duration))}} minutes</h3>
+                <h3>Duration: {{date('H', mktime(0,$film->duration))}} hours {{date('i', mktime(0,$film->duration))}}
+                    minutes</h3>
                 <h3>Release Date: {{$film->release}}</h3>
             </div>
         </div>
@@ -67,7 +68,13 @@
                             <div class="media-object stack-for-small large-8"
                                  style="border-left: #0a0a0a solid 1px; border-right: #0a0a0a solid 1px; padding: 20px; margin-top: 2vh; margin-bottom: 2vh;">
                                 <div class="media-object-section hide-for-small-only">
-                                    <img class="thumbnail" src="https://placehold.it/150x150"
+                                    <img class="thumbnail" src="
+                                    @if(file_exists(getcwd().'/img/user_avatars/'.$comment->id.'.png'))
+                                        /img/user_avatars/{{$comment->id}}.png
+                                    @else
+                                        https://placehold.it/150x150
+                                    @endif
+                                        "
                                          style="height: 150px; width: 150px;">
                                 </div>
                                 <div class="media-object-section">

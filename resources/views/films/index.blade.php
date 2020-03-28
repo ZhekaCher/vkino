@@ -16,7 +16,9 @@
                 <div class="media-object-section">
                     <h4><a href="/films/{{$film->id}}">{{$film->title}}</a></h4>
                     <p>{{$film->description}}</p>
-                    <b>Genres: @foreach($film-> genres as $genre) <a href="/films?genre={{$genre->value}}" style="font-style: italic">{{$genre->value}} </a>@endforeach</b>
+                    <b>Genres: @foreach($film-> genres as $genre) <a href="/films?genre={{$genre->value}}" style="font-style: italic">{{$genre->value}} </a>@endforeach</b><br>
+                    <b>Duration: {{date('H', mktime(0,$film->duration))}} hours {{date('i', mktime(0,$film->duration))}} minutes</b><br>
+                    <b>Release Date: {{$film->release}}</b>
                 </div>
             </div>
         @endforeach
