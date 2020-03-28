@@ -3,7 +3,6 @@
 @section('title', @$film->title)
 
 @section('content')
-
     <div class="row">
         <div class="grid-x">
             <div class="medium-5 columns text-center">
