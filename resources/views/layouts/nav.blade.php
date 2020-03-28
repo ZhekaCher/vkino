@@ -24,9 +24,10 @@
     </div>
     <div class="top-bar-right">
         <ul class="menu">
-            <li><input type="search" placeholder="Search"></li>
-            <li>
-                <button type="button" class="button">Search</button>
+            <li> <form class="menu" method="GET" action="/films">
+            <input type="text" id="search" name="search" placeholder="Search">
+            <button type="submit" class="button">Search</button>
+            </form>
             </li>
             @guest
                 <li>

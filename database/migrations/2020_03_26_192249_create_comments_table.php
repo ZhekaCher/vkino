@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->integer('user_id');
             $table->text('text');
             $table->integer('rating')->nullable();
-            $table->timestamp('relevance')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('relevance')->default(DB::raw('NOW'));
 
             $table->foreign('film_id')->references('id')->on('films');
             $table->foreign('user_id')->references('id')->on('users');

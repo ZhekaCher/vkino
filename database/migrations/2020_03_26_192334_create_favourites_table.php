@@ -16,7 +16,7 @@ class CreateFavouritesTable extends Migration
         Schema::create('favourites', function (Blueprint $table) {
             $table->integer('film_id');
             $table->integer('user_id');
-            $table->timestamp('relevance')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('relevance')->default(DB::raw('NOW'));
 
             $table->foreign('film_id')->references('id')->on('films');
             $table->foreign('user_id')->references('id')->on('users');
