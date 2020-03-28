@@ -103,24 +103,22 @@
                 </div>
                 <div class="tabs-panel" id="panel2">
                     <div class="grid-x">
-                        @for($i=0; $i<5; ++$i)
+                        @foreach($film->relatedFilms as $relatedFilm)
                             <div class="cell small-12 medium-4 large-2" style="margin: 30px">
                                 <div class="column text-center">
-                                    <img class="thumbnail" src="\img\film_posters\{{$film -> id}}.jpg"
+                                    <img class="thumbnail" src="\img\film_posters\{{$relatedFilm -> id}}.jpg"
                                          style="height: 40vh;">
-                                    <h5>Other Film </h5>
-                                    <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla
-                                        fringilla,
-                                        orci ac euismod semper, magna diam.</p>
+                                    <h5>{{$relatedFilm->title}} </h5>
+                                    <p>{{$relatedFilm->description}}</p>
                                     <small>
-                                        @foreach($film->genres as $genre)
+                                        @foreach($relatedFilm->genres as $genre)
                                             {{$genre->value}};
                                         @endforeach
                                     </small>
-                                    <a href="#" class="button hollow tiny expanded">Watch</a>
+                                    <a href="/films/{{$relatedFilm->id}}" class="button hollow expanded">Watch</a>
                                 </div>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                 </div>
             </div>

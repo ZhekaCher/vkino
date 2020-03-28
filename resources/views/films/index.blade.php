@@ -4,11 +4,23 @@
 
 @section('content')
 
-
-    @foreach($films  as $film)
-        <h1>{{$film -> title}}</h1>
-    @endforeach
+    <div class="grid-x align-center">
+        @foreach($films  as $film)
+            <div class="media-object stack-for-small large-10">
+                <div class="media-object-section">
+                    <div class="thumbnail">
+                        <img src="/img/film_posters/{{$film -> id}}.jpg" style="height: 20vh">
+                    </div>
+                </div>
+                <div class="media-object-section">
+                    <h4><a href="/films/{{$film->id}}">{{$film->title}}</a></h4>
+                    <p>{{$film->description}}</p>
+                    <b>Genres: @foreach($film-> genres as $genre) <a href="/films?genre={{$genre->value}}" style="font-style: italic">{{$genre->value}} </a>@endforeach</b>
+                </div>
+            </div>
+        @endforeach
+    </div>
     @if($films instanceof \Illuminate\Pagination\LengthAwarePaginator)
-    {{$films -> links()}}
+        <div class="text-center">{{$films -> links()}}</div>
     @endif
 @endsection

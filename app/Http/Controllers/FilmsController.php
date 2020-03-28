@@ -18,7 +18,8 @@ class FilmsController extends Controller
                 ->join('films_genres', 'films.id', '=', 'films_genres.film_id')
                 ->join('genres', 'films_genres.genre_id', '=', 'genres.id')
                 ->select('films.*')
-                ->where('genres.value', '=', $genre);
+                ->orderBy('title')
+                ->where('genres.value', '=', $genre)->paginate(5);
             $films->withPath('/films?genre=' . $genre);
             if ($films->isEmpty())
                 return view('error')->with('errorMessage', 'This genre doesn\'t exists or page doesn\'t contains any films');
@@ -27,16 +28,13 @@ class FilmsController extends Controller
         if ($search != null) {
             $films = Film::whereRaw('LOWER(title) LIKE \'%' . strtolower($search) . '%\'')->get();
         }
+        for ($i = 0; $i < count($films); ++$i) {
+            $films[$i] -> genres = DB::table('films_genres')
+                ->join('genres', 'films_genres.genre_id', '=', 'id')
+                ->where('films_genres.film_id', '=', $films[$i]-> id)
+                ->select('id', 'value')->get();
+        }
         return view('films.index', compact('films'));
-    }
-
-    public
-    function indexByGenre($genre)
-    {
-        $films = Film::all();
-        return $genre;
-
-//        return view('films.index', compact('films'));
     }
 
 
@@ -49,12 +47,32 @@ class FilmsController extends Controller
         $film->genres = DB::table('films_genres')
             ->join('genres', 'films_genres.genre_id', '=', 'id')
             ->where('films_genres.film_id', '=', $filmId)
-            ->select('value')->get();
+            ->select('id', 'value')->get();
+        $genresIds = array();
+        foreach ($film->genres as $genre) {
+            array_push($genresIds, $genre->id);
+        }
         $film->comments = DB::table('comments')
             ->join('users', 'comments.user_id', '=', 'users.id')
             ->where('comments.film_id', '=', $filmId)
             ->select('text', 'rating', 'relevance', 'name', 'users.id')->get();
-        $film = DB::table('films')->where('film_id' == $filmId);
+        $relatedFilms = DB::table('films')
+            ->join('films_genres', 'id', '=', 'film_id')
+            ->whereIn('films_genres.genre_id', $genresIds)
+            ->where('films.id', '!=', $filmId)
+            ->distinct('id')
+            ->select('id', 'title', 'description')
+            ->get();
+        $film->relatedFilms = array();
+        $relatedFilms = $relatedFilms->shuffle();
+        for ($i = 0; $i < 5; ++$i) {
+            $relatedFilms[$i]->genres = DB::table('films_genres')
+                ->join('genres', 'films_genres.genre_id', '=', 'id')
+                ->where('films_genres.film_id', '=', $relatedFilms[$i]->id)
+                ->select('id', 'value')->get();
+            array_push($film->relatedFilms, $relatedFilms[$i]);
+        }
+//        $film-> relatedFilms= $relatedFilms;
         return view('films.show')->with('film', $film);
     }
 }
