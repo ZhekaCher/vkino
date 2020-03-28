@@ -1,6 +1,1 @@
-*.css linguist-detectable=false
-*.CSS linguist-detectable=false
-*.scss linguist-detectable=false
-*.SCSS linguist-detectable=false
-*.js linguist-detectable=false
-*.JS linguist-detectable=false
+* linguist-language=PHP
