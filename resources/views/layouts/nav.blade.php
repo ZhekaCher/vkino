@@ -7,8 +7,9 @@
     <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
             <li><img id="logo" src="/img/vkino-black.png" alt="Logo"></li>
+            <li><a href="/films">Films</a></li>
             <li class="has-submenu">
-                <a href="/films">Films</a>
+                <a href="#">Genres</a>
                 <ul class="submenu menu vertical" data-submenu>
                     @php
                         $genres = App\Genre::all();
@@ -18,8 +19,6 @@
                     @endforeach
                 </ul>
             </li>
-            <li><a href="#0">Two</a></li>
-            <li><a href="#0">Three</a></li>
         </ul>
     </div>
     <div class="top-bar-right">
