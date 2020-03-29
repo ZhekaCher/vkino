@@ -25,16 +25,24 @@
         <ul class="menu">
             @auth
                 <li>
-                    <form action="/lol" method="POST" class="text-center" enctype="multipart/form-data" style="border-left: #0a0a0a solid 2px;border-right: #0a0a0a solid 2px; margin-right: 5vh">
+                    <form action="/imageUpload" method="POST" class="text-center" enctype="multipart/form-data"
+                          style="border-left: #0a0a0a solid 2px;border-right: #0a0a0a solid 2px; margin-right: 5vh">
                         @csrf
                         <label for="upload-photo" id="upload-photo-label">Upload avatar...</label>
-                        <input type="file" name="photo" id="upload-photo"/>
+                        <input type="file" name="image" id="upload-photo"/>
                         <button type="submit" id="submit-upload-photo">Submit</button>
                     </form>
                 </li>
                 <ul class="dropdown menu" data-dropdown-menu style="padding-right: 2vh">
                     <li class="has-submenu">
-                        <img class="ava" src="/img/user_avatars/1.png" style="width: 40px; height: auto">
+
+                        <img class="ava" src="
+                        @if(file_exists(getcwd().'/img/user_avatars/'.Auth::id().'.png'))
+                            /img/user_avatars/{{Auth::id()}}.png
+@else
+                            https://placehold.it/150x150
+@endif
+                            " style="width: 40px; height: auto">
                         <ul class="submenu menu vertical" data-submenu>
                             <li style="padding: .7rem 1rem">Signed in as <strong></strong>
                             </li>
