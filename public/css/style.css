@@ -16,3 +16,15 @@
     border-collapse: collapse !important;
     padding: 0 !important;
 }
+
+a:hover{
+    text-decoration: none;
+}
+
+.ava{
+    border-radius: 100%;
+}
+
+.ava:hover{
+    border: deepskyblue solid 2px;
+}

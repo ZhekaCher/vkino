@@ -110,7 +110,7 @@
                 <div class="tabs-panel" id="panel2">
                     <div class="grid-x">
                         @foreach($film->relatedFilms as $relatedFilm)
-                            <div class="cell small-12 medium-4 large-2" style="margin: 30px">
+                            <div class="cell small-10 medium-5 large-2" style="margin: 30px">
                                 <div class="column text-center">
                                     <img class="thumbnail" src="\img\film_posters\{{$relatedFilm -> id}}.jpg"
                                          style="width: auto; height: 40vh;">

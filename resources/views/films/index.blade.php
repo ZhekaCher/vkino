@@ -8,7 +8,7 @@
         @foreach($films  as $film)
             <hr class="cell large-12">
             <div class="media-object stack-for-small large-10">
-                <div class="media-object-section">
+                <div class="media-object-section text-center">
                     <div class="thumbnail">
                         <img src="/img/film_posters/{{$film -> id}}.jpg" style=" width:auto;height: 20vh">
                     </div>

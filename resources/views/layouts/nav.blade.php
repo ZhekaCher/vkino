@@ -23,10 +23,33 @@
     </div>
     <div class="top-bar-right">
         <ul class="menu">
-            <li> <form class="menu" method="GET" action="/films">
-            <input type="text" id="search" name="search" placeholder="Search">
-            <button type="submit" class="button">Search</button>
-            </form>
+            @auth
+
+                <ul class="dropdown menu" data-dropdown-menu style="padding-right: 2vh">
+                    <li class="has-submenu">
+                        <img class="ava" src="/img/user_avatars/1.png" style="width: 40px; height: auto">
+                        <ul class="submenu menu vertical" data-submenu>
+
+                            <li style="padding: .7rem 1rem">Signed in as <strong></strong>
+                            </li>
+                            <li><a href="/films/favourites" style="padding-bottom: 1px">Favourites</a></li>
+                            <li><hr/></li>
+                            <li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <a onclick="document.getElementById('logout-form').submit()">Logout</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            @endauth
+            <li>
+                <form class="menu" method="GET" action="/films">
+                    <input type="text" id="search" name="search" placeholder="Search">
+                    <button type="submit" class="button">Search</button>
+                </form>
             </li>
             @guest
                 <li>
@@ -38,15 +61,7 @@
                     </li>
                 @endif
             @endguest
-            @auth
-                {{--                TODO(Add menu for user with logout)--}}
-                <li>
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                        <button type="submit" class="button">Logout</button>
-                    </form>
-                </li>
-            @endauth
+
 
         </ul>
     </div>
