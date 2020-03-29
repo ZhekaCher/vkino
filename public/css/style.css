@@ -28,3 +28,31 @@ a:hover{
 .ava:hover{
     border: deepskyblue solid 2px;
 }
+
+
+#upload-photo {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+
+#upload-photo-label{
+
+    padding-right: 1vh;
+    padding-left: 1vh;
+    font-size: 10px;}
+#upload-photo-label:hover{
+    cursor: pointer;
+}
+
+#submit-upload-photo{border: #0a0a0a solid 1px; border-radius: 1vh; padding: 3px;}
+
+#submit-upload-photo:hover{
+    background-color: black;
+    border-color: white;
+    padding: 2px;
+    color: white;
+    cursor: pointer;
+}

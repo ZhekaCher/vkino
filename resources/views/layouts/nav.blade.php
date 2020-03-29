@@ -24,16 +24,26 @@
     <div class="top-bar-right">
         <ul class="menu">
             @auth
-
+                <li>
+                    <form action="/lol" method="POST" class="text-center" enctype="multipart/form-data" style="border-left: #0a0a0a solid 2px;border-right: #0a0a0a solid 2px; margin-right: 5vh">
+                        @csrf
+                        <label for="upload-photo" id="upload-photo-label">Upload avatar...</label>
+                        <input type="file" name="photo" id="upload-photo"/>
+                        <button type="submit" id="submit-upload-photo">Submit</button>
+                    </form>
+                </li>
                 <ul class="dropdown menu" data-dropdown-menu style="padding-right: 2vh">
                     <li class="has-submenu">
                         <img class="ava" src="/img/user_avatars/1.png" style="width: 40px; height: auto">
                         <ul class="submenu menu vertical" data-submenu>
-
                             <li style="padding: .7rem 1rem">Signed in as <strong></strong>
                             </li>
                             <li><a href="/films/favourites" style="padding-bottom: 1px">Favourites</a></li>
-                            <li><hr/></li>
+                            <li>
+                                <hr/>
+                            </li>
+
+
                             <li>
                                 <form id="logout-form" action="{{ route('logout') }}" method="post">
                                     @csrf
