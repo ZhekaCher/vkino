@@ -69,8 +69,8 @@
                                  style="border-left: #0a0a0a solid 1px; border-right: #0a0a0a solid 1px; padding: 20px; margin-top: 2vh; margin-bottom: 2vh;">
                                 <div class="media-object-section hide-for-small-only">
                                     <img class="thumbnail" src="
-                                    @if(file_exists(getcwd().'/img/user_avatars/'.$comment->id.'.png'))
-                                        /img/user_avatars/{{$comment->id}}.png
+                                    @if(file_exists(getcwd().'/img/user_avatars/'.$comment->user_id.'.png'))
+                                        /img/user_avatars/{{$comment->user_id}}.png
                                     @else
                                         https://placehold.it/150x150
                                     @endif
@@ -89,8 +89,13 @@
                                         </p>
                                     @endif
                                     @auth
-                                        @if(Auth::id() == $comment->id)
+                                        @if(Auth::id() == $comment->user_id)
+                                            <form method="post" action="/deleteComment">
+                                                @csrf
+                                                <input type="hidden" name="comment_id" value="{{$comment->comment_id}}">
+                                                <input type="hidden" name="user_id" value="{{$comment->user_id}}">
                                             <button class="button">Delete Comment</button>
+                                            </form>
                                         @endif
                                     @endauth
                                 </div>
@@ -112,7 +117,7 @@
                         @foreach($film->relatedFilms as $relatedFilm)
                             <div class="cell small-10 medium-5 large-2" style="margin: 30px">
                                 <div class="column text-center">
-                                    <img class="thumbnail" src="\img\film_posters\{{$relatedFilm -> id}}.jpg"
+                                    <img class="thumbnail" src="\img\film_posters\{{$relatedFilm ->id}}.jpg"
                                          style="width: auto; height: 40vh;">
                                     <h5>{{$relatedFilm->title}} </h5>
                                     <p>{{$relatedFilm->description}}</p>

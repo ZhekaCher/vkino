@@ -55,7 +55,7 @@ class FilmsController extends Controller
         $film->comments = DB::table('comments')
             ->join('users', 'comments.user_id', '=', 'users.id')
             ->where('comments.film_id', '=', $filmId)
-            ->select('text', 'rating', 'relevance', 'name', 'users.id')->get();
+            ->select('text', 'rating', 'relevance', 'name', 'users.id as user_id', 'comments.id as comment_id')->get();
         $relatedFilms = DB::table('films')
             ->join('films_genres', 'id', '=', 'film_id')
             ->whereIn('films_genres.genre_id', $genresIds)

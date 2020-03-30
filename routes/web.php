@@ -23,3 +23,4 @@ Route::get('/home', function (){return redirect('/films');});
 Route::get('/films', 'FilmsController@index');
 Route::get('/films/{filmId}', 'FilmsController@show');
 Route::post('/imageUpload', 'ImageUploadController@avatarUploadPost');
+Route::post('/deleteComment', 'CommentsController@deleteComment');
