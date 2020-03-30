@@ -23,4 +23,4 @@ Auth::routes();
 Route::get('/home', function (){return redirect('/');});
 Route::get('/films', 'FilmsController@index');
 Route::get('/films/{filmId}', 'FilmsController@show');
-Route::post('/imageUpload', 'ImageUpload@avatarUploadPost');
+Route::post('/imageUpload', 'ImageUploadController@avatarUploadPost');

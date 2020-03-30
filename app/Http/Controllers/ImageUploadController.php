@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
-class ImageUpload extends Controller
+class ImageUploadController extends Controller
 {
     public function avatarUploadPost()
 
