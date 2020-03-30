@@ -14,4 +14,10 @@ class CommentsController extends Controller
             DB::delete('DELETE FROM comments WHERE id=' . request()->comment_id);
         return back();
     }
+    public function addComment()
+    {
+        $quiery = 'INSERT INTO comments (film_id,user_id, text) VALUES ('.request()->film_id.', '.Auth::id().', \''.request()->text.'\')';
+            DB::insert($quiery);
+        return back();
+    }
 }

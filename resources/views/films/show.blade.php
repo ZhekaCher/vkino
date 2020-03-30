@@ -102,15 +102,18 @@
                             </div>
                         @endforeach
                     </div>
+                    @auth
                     <div class="grid-x align-center">
                         <div class="large-6">
-                            <label>
-                                My Review
-                                <textarea placeholder="None"></textarea>
-                            </label>
-                            <button class="button">Submit Review</button>
+                            <form action="/addComment" method="post">
+                                @csrf
+                                <input type="hidden" name="film_id" value="{{$film -> id}}">
+                                <textarea type="textarea" name="text" placeholder="My Review"></textarea>
+                            <button class="button" type="submit">Submit Review</button>
+                            </form>
                         </div>
                     </div>
+                        @endauth
                 </div>
                 <div class="tabs-panel" id="panel2">
                     <div class="grid-x">
