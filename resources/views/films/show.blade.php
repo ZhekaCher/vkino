@@ -5,36 +5,64 @@
 @section('content')
     <div class="row">
         <div class="grid-x">
+
             <div class="medium-5 columns text-center">
                 <img class="thumbnail" src="\img\film_posters\{{$film -> id}}.jpg" style="height: 40vh">
 
             </div>
             <div class="medium-8 large-5 columns">
-                <h3>{{$film -> title}}</h3>
+
+                <h3>
+                    {{$film -> title}}
+                    @auth
+                        <script>
+                            function sendFavouriteForm() {
+                                $('#add-favourite').submit();
+                            }
+                        </script>
+                        @if($film -> favourite)
+                            <form method="post" id="add-favourite" action="/deleteFavourite">
+                                @csrf
+                                <input type="hidden" name="film_id" value="{{$film->id}}"/>
+                                <i class="fav fas fa-bookmark" onclick="sendFavouriteForm()"></i>
+                            </form>
+                        @else
+                            <form method="post" id="add-favourite" action="/addFavourite">
+                                @csrf
+                                <input type="hidden" name="film_id" value="{{$film->id}}"/>
+                                <i class="fav far fa-bookmark" onclick="sendFavouriteForm()"></i>
+                            </form>
+                        @endif
+
+                    @endauth
+                </h3>
+
                 <p>{{$film -> description}}</p>
 
                 <h3>Genres: <small>@foreach($film -> genres as $genre) <a
-                            href="/films?genre={{$genre->value}}">{{$genre->value}} </a>@endforeach</small></h3>
+                            href="/films?genre={{$genre->value}}">{{$genre->value}} </a>@endforeach
+                    </small>
+                </h3>
                 {{--            <h3>Genres: <small>{{$film -> genres}}</small></h3>--}}
 
                 <div class="row">
                     <div class="small-3 columns">
-                        @if(count($film->comments)!=0)
-                            <h3>Rating:
-                                @php
-                                    $i = 0;
-                                    $j = 0;
-                                        $comments = $film-> comments;
-                                        foreach ($comments as $comment){
-                                            if ($comment-> rating != null){
-                                                $j++;
-                                                $i += $comment-> rating;
-                                                }
+
+                        @php
+                            $i = 0;
+                            $j = 0;
+                                $comments = $film-> comments;
+                                foreach ($comments as $comment){
+                                    if ($comment-> rating != null){
+                                        $j++;
+                                        $i += $comment-> rating;
                                         }
-
-                                        $i = $i/$j
-                                @endphp
-
+                                }
+                                if($j>0)
+                                    $i = $i/$j
+                        @endphp
+                        @if($j>0)
+                            <h3>Rating:
                                 @while($i>1)
                                     @php $i = $i-1;@endphp
                                     <i class="fas fa-star" style="color: orange"></i>
@@ -44,11 +72,12 @@
                                 @else
                                     <i class="fas fa-star" style="color: orange"></i>
                                 @endif
+                                @endif
                             </h3>
-                        @endif
                     </div>
                 </div>
-                <h3>Duration: {{date('H', mktime(0,$film->duration))}} hours {{date('i', mktime(0,$film->duration))}}
+                <h3>Duration: {{date('H', mktime(0,$film->duration))}}
+                    hours {{date('i', mktime(0,$film->duration))}}
                     minutes</h3>
                 <h3>Release Date: {{$film->release}}</h3>
             </div>
@@ -57,7 +86,8 @@
         <div class="column row">
             <hr>
             <ul class="tabs" data-tabs id="example-tabs">
-                <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Reviews</a></li>
+                <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Reviews</a>
+                </li>
                 <li class="tabs-title"><a href="#panel2">Similar Films</a></li>
             </ul>
             <div class="tabs-content" data-tabs-content="example-tabs">
@@ -73,13 +103,14 @@
                                         /img/user_avatars/{{$comment->user_id}}.png
                                     @else
                                         https://placehold.it/150x150
-                                    @endif
+@endif
                                         "
                                          style="height: 150px; width: 150px;">
                                 </div>
                                 <div class="media-object-section">
                                     <h5><b>{{$comment-> name}}</b> <b
-                                            style="font-style: italic">{{$comment -> relevance}}</b></h5>
+                                            style="font-style: italic">{{$comment -> relevance}}</b>
+                                    </h5>
                                     <p>{{$comment-> text}}</p>
                                     @if($comment-> rating != null)
                                         <p>Rating:
@@ -92,9 +123,11 @@
                                         @if(Auth::id() == $comment->user_id)
                                             <form method="post" action="/deleteComment">
                                                 @csrf
-                                                <input type="hidden" name="comment_id" value="{{$comment->comment_id}}">
-                                                <input type="hidden" name="user_id" value="{{$comment->user_id}}">
-                                            <button class="button">Delete Comment</button>
+                                                <input type="hidden" name="comment_id"
+                                                       value="{{$comment->comment_id}}">
+                                                <input type="hidden" name="user_id"
+                                                       value="{{$comment->user_id}}">
+                                                <button class="button">Delete Comment</button>
                                             </form>
                                         @endif
                                     @endauth
@@ -103,24 +136,26 @@
                         @endforeach
                     </div>
                     @auth
-                    <div class="grid-x align-center">
-                        <div class="large-6">
-                            <form action="/addComment" method="post">
-                                @csrf
-                                <input type="hidden" name="film_id" value="{{$film -> id}}">
-                                <textarea type="textarea" name="text" placeholder="My Review"></textarea>
-                            <button class="button" type="submit">Submit Review</button>
-                            </form>
+                        <div class="grid-x align-center">
+                            <div class="large-6">
+                                <form action="/addComment" method="post">
+                                    @csrf
+                                    <input type="hidden" name="film_id" value="{{$film -> id}}">
+                                    <textarea type="textarea" name="text"
+                                              placeholder="My Review"></textarea>
+                                    <button class="button" type="submit">Submit Review</button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                        @endauth
+                    @endauth
                 </div>
                 <div class="tabs-panel" id="panel2">
                     <div class="grid-x">
                         @foreach($film->relatedFilms as $relatedFilm)
                             <div class="cell small-10 medium-5 large-2" style="margin: 30px">
                                 <div class="column text-center">
-                                    <img class="thumbnail" src="\img\film_posters\{{$relatedFilm ->id}}.jpg"
+                                    <img class="thumbnail"
+                                         src="\img\film_posters\{{$relatedFilm ->id}}.jpg"
                                          style="width: auto; height: 40vh;">
                                     <h5>{{$relatedFilm->title}} </h5>
                                     <p>{{$relatedFilm->description}}</p>
@@ -129,7 +164,8 @@
                                             {{$genre->value}};
                                         @endforeach
                                     </small>
-                                    <a href="/films/{{$relatedFilm->id}}" class="button hollow expanded">Watch</a>
+                                    <a href="/films/{{$relatedFilm->id}}"
+                                       class="button hollow expanded">Watch</a>
                                 </div>
                             </div>
                         @endforeach

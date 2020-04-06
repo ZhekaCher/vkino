@@ -56,3 +56,10 @@ a:hover{
     color: white;
     cursor: pointer;
 }
+.fav{
+    color: orange;
+}
+
+.fav:hover{
+    cursor: pointer;
+}

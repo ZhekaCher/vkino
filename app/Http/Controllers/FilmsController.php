@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use foo\bar;
 use Illuminate\Http\Request;
 use App\Film;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FilmsController extends Controller
@@ -29,17 +31,37 @@ class FilmsController extends Controller
             $films = Film::whereRaw('LOWER(title) LIKE \'%' . strtolower($search) . '%\'')->get();
         }
         for ($i = 0; $i < count($films); ++$i) {
-            $films[$i] -> genres = DB::table('films_genres')
+            $films[$i]->genres = DB::table('films_genres')
                 ->join('genres', 'films_genres.genre_id', '=', 'id')
-                ->where('films_genres.film_id', '=', $films[$i]-> id)
+                ->where('films_genres.film_id', '=', $films[$i]->id)
+                ->select('id', 'value')->get();
+        }
+        return view('films.index', compact('films'));
+    }
+
+    public function favourites(Request $request)
+    {
+        if (Auth::guest())
+            return redirect('/films');
+        $films = DB::table('films')
+            ->join('favourites', 'films.id', '=', 'favourites.film_id')
+            ->select('films.*')
+            ->orderBy('title')
+            ->where('favourites.user_id', '=', Auth::id())->paginate(5);
+        if ($films->isEmpty())
+            return view('error')->with('errorMessage', 'You have no favourites');
+
+        for ($i = 0; $i < count($films); ++$i) {
+            $films[$i]->genres = DB::table('films_genres')
+                ->join('genres', 'films_genres.genre_id', '=', 'id')
+                ->where('films_genres.film_id', '=', $films[$i]->id)
                 ->select('id', 'value')->get();
         }
         return view('films.index', compact('films'));
     }
 
 
-    public
-    function show(Request $request, $filmId)
+    public function show(Request $request, $filmId)
     {
         $film = DB::table('films')->find($filmId);
         if ($film == null)
@@ -52,6 +74,10 @@ class FilmsController extends Controller
         foreach ($film->genres as $genre) {
             array_push($genresIds, $genre->id);
         }
+        $film->favourite = false;
+        if (!Auth::guest())
+            if (!DB::table('favourites')->where('film_id', '=', $filmId)->where('user_id', '=', Auth::id())->get()->isEmpty())
+                $film->favourite = true;
         $film->comments = DB::table('comments')
             ->join('users', 'comments.user_id', '=', 'users.id')
             ->where('comments.film_id', '=', $filmId)
