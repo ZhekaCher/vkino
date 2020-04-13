@@ -12,7 +12,7 @@
                 <a href="#">Genres</a>
                 <ul class="submenu menu vertical" data-submenu>
                     @php
-                        $genres = App\Genre::all();
+                        $genres = App\Genre::all() -> sortBy('value');
                     @endphp
                     @foreach($genres as $genre)
                         <li><a href="/films?genre={{$genre->value}}">{{$genre->value}}</a></li>
