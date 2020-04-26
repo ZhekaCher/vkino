@@ -16,6 +16,7 @@ class CommentsController extends Controller
     }
     public function addComment()
     {
+        $unavaliableWords = array(['bad', 'error']);
         $query = 'INSERT INTO comments (film_id,user_id, text) VALUES ('.request()->film_id.', '.Auth::id().', \''.request()->text.'\')';
         DB::insert($query);
         return back();
