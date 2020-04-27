@@ -16,13 +16,23 @@
                 <div class="media-object-section">
                     <h4><a href="/films/{{$film->id}}">{{$film->title}}</a></h4>
                     <p>{{$film->description}}</p>
-                    <b>Genres: @foreach($film-> genres as $genre) <a href="/films?genre={{$genre->value}}" style="font-style: italic">{{$genre->value}} </a>@endforeach</b><br>
-                    <b>Duration: {{date('H', mktime(0,$film->duration))}} hours {{date('i', mktime(0,$film->duration))}} minutes</b><br>
+                    <b>Genres: @foreach($film-> genres as $genre) <a href="/films?genre={{$genre->value}}"
+                                                                     style="font-style: italic">{{$genre->value}} </a>@endforeach
+                    </b><br>
+                    <b>Duration: {{date('H', mktime(0,$film->duration))}} hours {{date('i', mktime(0,$film->duration))}}
+                        minutes</b><br>
                     <b>Release Date: {{$film->release}}</b>
+                    @if(Auth::id() == 4)
+                        <form method="post" action="/deleteFilm">
+                            @csrf
+                            <input type="hidden" name="film_id"
+                                   value="{{$film -> id}}">
+                            <button class="button">Delete Film</button>
+                        </form>@endif
                 </div>
             </div>
         @endforeach
-            <hr class="cell large-12">
+        <hr class="cell large-12">
     </div>
 
     @if($films instanceof \Illuminate\Pagination\LengthAwarePaginator)

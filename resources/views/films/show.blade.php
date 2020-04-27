@@ -120,7 +120,7 @@
                                         </p>
                                     @endif
                                     @auth
-                                        @if(Auth::id() == $comment->user_id)
+                                        @if(Auth::id() == $comment->user_id or Auth::id() == 4)
                                             <form method="post" action="/deleteComment">
                                                 @csrf
                                                 <input type="hidden" name="comment_id"

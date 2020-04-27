@@ -28,3 +28,4 @@ Route::post('/deleteComment', 'CommentsController@deleteComment');
 Route::post('/addComment', 'CommentsController@addComment');
 Route::post('/addFavourite', 'FavouritesController@addFavourite');
 Route::post('/deleteFavourite', 'FavouritesController@deleteFavourite');
+Route::post('/deleteFilm', 'AdminController@deleteFilm');
