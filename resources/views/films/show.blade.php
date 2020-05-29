@@ -109,7 +109,24 @@
                                 </div>
                                 <div class="media-object-section">
                                     <h5><b>{{$comment-> name}}</b> <b
-                                            style="font-style: italic">{{$comment -> relevance}}</b>
+                                            style="font-style: italic">{{$comment -> relevance}}
+
+                                            @if(  count($comment->userLike)>0    )
+                                                <form method="post" action="/deleteLike">
+                                                    @csrf
+                                                    <input type="hidden" name="comment_id"
+                                                           value="{{$comment->comment_id}}">
+                                                    <button class="fas fa-thumbs-up"></button>
+                                                </form>
+                                            @else
+                                                <form method="post" action="/addLike">
+                                                    @csrf
+                                                    <input type="hidden" name="comment_id"
+                                                           value="{{$comment->comment_id}}">
+                                                    <button class="fal fa-thumbs-up"></button>
+                                                </form>
+                                            @endif
+                                            {{count($comment->likes)}}</b>
                                     </h5>
                                     <p>{{$comment-> text}}</p>
                                     @if($comment-> rating != null)

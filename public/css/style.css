@@ -63,3 +63,12 @@ a:hover{
 .fav:hover{
     cursor: pointer;
 }
+
+.fas:hover{
+    cursor: pointer;
+    color: orange;
+}
+.fal:hover{
+    cursor: pointer;
+    color: orange;
+}

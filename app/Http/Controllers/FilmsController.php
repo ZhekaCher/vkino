@@ -89,6 +89,10 @@ class FilmsController extends Controller
             ->distinct('id')
             ->select('id', 'title', 'description')
             ->get();
+        for ($i = 0; $i <count($film-> comments); ++$i){
+            $film->comments[$i]->likes= DB::table('likes')->where('likes.comment_id', '=',$film->comments[$i]->comment_id)->select('likes.user_id')->get();
+            $film->comments[$i]->userLike= DB::table('likes')->where('likes.comment_id', '=',$film->comments[$i]->comment_id)->where('likes.user_id', '=',Auth::id())->select('likes.user_id')->get();
+        }
         $film->relatedFilms = array();
         $relatedFilms = $relatedFilms->shuffle();
         for ($i = 0; $i < 5; ++$i) {
