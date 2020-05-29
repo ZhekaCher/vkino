@@ -11,8 +11,10 @@ class CommentsController extends Controller
 {
     public function deleteComment()
     {
-        if (Auth::id() == request()->user_id or Auth::id()==4)
+        if (Auth::id() == request()->user_id or Auth::id()==4) {
+            DB::delete('DELETE FROM likes WHERE comment_id=' . request()->comment_id);
             DB::delete('DELETE FROM comments WHERE id=' . request()->comment_id);
+        }
         return back();
     }
     public function addComment()

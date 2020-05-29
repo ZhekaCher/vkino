@@ -110,23 +110,6 @@
                                 <div class="media-object-section">
                                     <h5><b>{{$comment-> name}}</b> <b
                                             style="font-style: italic">{{$comment -> relevance}}
-
-                                            @if(  count($comment->userLike)>0    )
-                                                <form method="post" action="/deleteLike">
-                                                    @csrf
-                                                    <input type="hidden" name="comment_id"
-                                                           value="{{$comment->comment_id}}">
-                                                    <button class="fas fa-thumbs-up"></button>
-                                                </form>
-                                            @else
-                                                <form method="post" action="/addLike">
-                                                    @csrf
-                                                    <input type="hidden" name="comment_id"
-                                                           value="{{$comment->comment_id}}">
-                                                    <button class="fal fa-thumbs-up"></button>
-                                                </form>
-                                            @endif
-                                            {{count($comment->likes)}}</b>
                                     </h5>
                                     <p>{{$comment-> text}}</p>
                                     @if($comment-> rating != null)
@@ -136,18 +119,38 @@
                                             @endfor
                                         </p>
                                     @endif
-                                    @auth
-                                        @if(Auth::id() == $comment->user_id or Auth::id() == 4)
-                                            <form method="post" action="/deleteComment">
-                                                @csrf
-                                                <input type="hidden" name="comment_id"
-                                                       value="{{$comment->comment_id}}">
-                                                <input type="hidden" name="user_id"
-                                                       value="{{$comment->user_id}}">
-                                                <button class="button">Delete Comment</button>
-                                            </form>
+                                    @if(  count($comment->userLike)>0    )
+                                        <form method="post" action="/deleteLike">
+                                            @csrf
+                                            <input type="hidden" name="comment_id"
+                                                   value="{{$comment->comment_id}}">
+                                             <button class="fas fa-thumbs-up"></button>{{count($comment->likes)}}</b>
+                                        </form>
+                                    @else
+                                        <form method="post" action="/addLike">
+                                            @csrf
+                                            <input type="hidden" name="comment_id"
+                                                   value="{{$comment->comment_id}}">
+                                            <button class="fal fa-thumbs-up"></button>{{count($comment->likes)}}</b>
+                                        </form>
                                         @endif
-                                    @endauth
+                                    <div class=" like{{$comment->comment_id}}">
+                                        @foreach($comment->likes as $like)
+                                            <span data-tooltip class="top" tabindex="2" title="{{$like->name}}"><img class="ava" src="/img/user_avatars/{{$like->user_id}}.png" style="width: 40px; height: auto" alt=""></span>
+                                            @endforeach
+                                    </div>
+                                        @auth
+                                            @if(Auth::id() == $comment->user_id or Auth::id() == 4)
+                                                <form method="post" action="/deleteComment">
+                                                    @csrf
+                                                    <input type="hidden" name="comment_id"
+                                                           value="{{$comment->comment_id}}">
+                                                    <input type="hidden" name="user_id"
+                                                           value="{{$comment->user_id}}">
+                                                    <button class="button">Delete Comment</button>
+                                                </form>
+                                            @endif
+                                        @endauth
                                 </div>
                             </div>
                         @endforeach
@@ -192,10 +195,8 @@
         </div>
     </div>
 
-
-
-
-
-
-
+    <script>
+        var apend
+        $('.like{{$comment->comment_id}}').append('')
+    </script>
 @endsection

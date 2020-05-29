@@ -90,7 +90,7 @@ class FilmsController extends Controller
             ->select('id', 'title', 'description')
             ->get();
         for ($i = 0; $i <count($film-> comments); ++$i){
-            $film->comments[$i]->likes= DB::table('likes')->where('likes.comment_id', '=',$film->comments[$i]->comment_id)->select('likes.user_id')->get();
+            $film->comments[$i]->likes= DB::table('likes')->join('users','users.id','=','likes.user_id')->where('likes.comment_id', '=',$film->comments[$i]->comment_id)->select('likes.user_id', 'users.name')->orderByDesc('likes.relevance')->get();
             $film->comments[$i]->userLike= DB::table('likes')->where('likes.comment_id', '=',$film->comments[$i]->comment_id)->where('likes.user_id', '=',Auth::id())->select('likes.user_id')->get();
         }
         $film->relatedFilms = array();
